@@ -1,0 +1,65 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.lxtest'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+repositories {
+    mavenLocal()
+    maven {
+        name "aliyun1"
+        url 'http://maven.aliyun.com/nexus/content/groups/public'
+    }
+    maven {
+        name "aliyun2"
+        url 'http://maven.aliyun.com/mvn/repository/'
+    }
+    maven {
+        name "spring repo"
+        url "http://repo.spring.io/release"
+    }
+    maven {
+        name "spring milestone"
+        url "https://repo.spring.io/milestone/"
+    }
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework.session:spring-session-core'
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
+    compile group: 'com.rabbitmq', name: 'amqp-client', version: '5.10.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+defaultTasks 'taskB'
+
+task taskA {
+    println "i’m task A"
+}
+
+task taskB {
+    println "i’m task B, and I depend on " + taskA.name
+}
+
+taskB.dependsOn taskA
