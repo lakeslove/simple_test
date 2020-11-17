@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven'
 
 group = 'com.lxtest'
 version = '0.0.1-SNAPSHOT'
@@ -44,12 +45,15 @@ dependencies {
     implementation 'org.springframework.session:spring-session-core'
     implementation "org.springframework.boot:spring-boot-starter-amqp"
     compile group: 'com.rabbitmq', name: 'amqp-client', version: '5.10.0'
-
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
+
+    compile('org.springframework.boot:spring-boot-starter-web')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+    compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
 }
 
 defaultTasks 'taskB'
